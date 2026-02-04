@@ -18,8 +18,12 @@ return new class extends Migration
             $table->string('name');
             $table->string('description')->nullable();
             $table->string('sku')->nullable();
-            $table->decimal('regular_price', 10, 4)->nullable('000000.0000');
-            $table->decimal('price', 10, 4)->nullable('000000.0000');
+
+            $table->unsignedInteger('weight_grams')->default(0);
+
+            $table->unsignedInteger('stock_quantity')->default(0);
+
+            $table->decimal('price', 11, 4)->default(0.0000);
             $table->timestamps();
         });
     }
