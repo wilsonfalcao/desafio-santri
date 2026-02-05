@@ -11,6 +11,7 @@ use App\Services\CalculateContext;
 use App\Services\ProductCalculate;
 // Strategy Calc
 use App\Services\Strategies\DiscountPremiumClientStrategy;
+use App\Services\Strategies\DiscountPriceByClientTypeStrategy;
 use App\Services\Strategies\HeavyWeightFreightTaxStrategy;
 use App\Services\Strategies\IcmsTaxStrategy;
 use App\Services\Strategies\ProgressiveDiscountByQuantity;
@@ -26,6 +27,7 @@ class CalculateController extends Controller
 
         $pipeline = new ProductCalculate(
             Collection::make([
+                new DiscountPriceByClientTypeStrategy(),
                 new DiscountPremiumClientStrategy,
                 new ProgressiveDiscountByQuantity,
                 new HeavyWeightFreightTaxStrategy(1),

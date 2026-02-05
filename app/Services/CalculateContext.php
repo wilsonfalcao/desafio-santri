@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Enums\ClientTypeEnum;
 use App\Models\ICMSMock;
 
 interface ICalculateContext
@@ -18,7 +19,7 @@ interface ICalculateContext
 
     public function getIcmsTax(): int;
 
-    public function getClientType(): string;
+    public function getClientType(): ClientTypeEnum;
 }
 
 class CalculateContext implements ICalculateContext
@@ -48,7 +49,7 @@ class CalculateContext implements ICalculateContext
         return $this->budget->getQuantity();
     }
 
-    public function getClientType(): string
+    public function getClientType(): ClientTypeEnum
     {
         return $this->budget->getUser()->client_type;
     }
