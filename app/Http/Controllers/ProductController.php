@@ -4,14 +4,19 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+// Models
 use App\Http\Requests\StoreProductRequest;
-use App\Models\Budget;
+use App\Models\Budget; //Mock
 use App\Models\Product;
 
+//
 use App\Services\CalculateContext;
-use App\Services\Strategies\PricePremiumStrategy;
-use App\Services\Strategies\ProgressiveDiscountByQuantity;
 use App\Services\ProductCalculate;
+
+// Rules Strategy Calculate
+use App\Services\Strategies\ProgressiveDiscountByQuantity;
+use App\Services\Strategies\DiscountPremiumClientStrategy;
+use App\Services\Strategies\HeavyWeightFreightTaxStrategy;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -28,8 +33,9 @@ class ProductController extends Controller
 
         $pipeline = new ProductCalculate(
             Collection::make([
-                new PricePremiumStrategy(),
-                new ProgressiveDiscountByQuantity()
+                new DiscountPremiumClientStrategy(),
+                new ProgressiveDiscountByQuantity(),
+                new HeavyWeightFreightTaxStrategy(1)
             ])
         );
 
