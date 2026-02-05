@@ -6,11 +6,18 @@ namespace App\Models;
 
 use App\Services\IBudget;
 
+use function Symfony\Component\Clock\now;
+
 class Budget implements IBudget
 {
+    protected string $id;
+    public function __construct()
+    {
+        $this->id = hash('md5', date("h:i:sa"));
+    }
     public function getId(): string
     {
-        return '';
+        return $this->id;
     }
 
     public function getProduct(): Product

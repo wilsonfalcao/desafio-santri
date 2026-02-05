@@ -37,6 +37,11 @@ class CalculateController extends Controller
 
         $price = $pipeline->calculate($baseContext);
 
-        return response()->json([$price], 200);
+        $jsonBuild = [
+            'id' => $budget->getId(),
+            'total' => $price
+        ];
+
+        return response()->json([$jsonBuild], 200);
     }
 }
