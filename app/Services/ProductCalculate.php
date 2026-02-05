@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use Exception;
 use Illuminate\Support\Collection;
 use InvalidArgumentException;
-
 
 interface IProductCalculate
 {
@@ -20,7 +18,9 @@ class ProductCalculate implements IProductCalculate
 
     public function __construct(Collection $strategiesPipeline)
     {
-        if ($strategiesPipeline->isEmpty()) throw new InvalidArgumentException('Construct params needs a strategy police...');
+        if ($strategiesPipeline->isEmpty()) {
+            throw new InvalidArgumentException('Construct params needs a strategy police...');
+        }
         $this->strategiesPipeline = $strategiesPipeline;
     }
 

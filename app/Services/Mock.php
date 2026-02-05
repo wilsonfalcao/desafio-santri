@@ -36,7 +36,6 @@ class Budget implements IBudget
 
 interface ICalculateBaseValues
 {
-
     public function getTotal(): float;
 
     public function getWeightTotal(): int;
@@ -44,7 +43,6 @@ interface ICalculateBaseValues
 
 class CalculateBaseValues implements ICalculateBaseValues
 {
-
     public function __construct(
         protected Budget $budget,
         protected float $profitDiscount = 0
@@ -79,13 +77,15 @@ interface IStrategy
 abstract class ProductCalculatorAbstract implements IProductCalculate
 {
     protected Collection $strategiesPipeline;
+
     public function __construct(Collection $strategiesPipeline)
     {
-        if (empty($this->strategiesPipeline)) throw new Exception('Construct params needs a strategy police...');
+        if (empty($this->strategiesPipeline)) {
+            throw new Exception('Construct params needs a strategy police...');
+        }
         $this->strategiesPipeline = $strategiesPipeline->ensure(IStrategy::class);
     }
 }
-
 
 class PricePremiumStrategy implements IStrategy
 {
@@ -103,10 +103,8 @@ class PricePremiumStrategy implements IStrategy
     }
 }
 
-
 class ProductCalculator extends ProductCalculatorAbstract
 {
-
     public function __construct(array $strategiesPipeline)
     {
         return parent::__construct($strategiesPipeline);

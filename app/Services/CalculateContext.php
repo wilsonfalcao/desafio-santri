@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Models\ICMSMock;
+
 interface ICalculateContext
 {
     public function getTotal(): float;
@@ -13,8 +15,9 @@ interface ICalculateContext
     public function isClientPremium(): bool;
 
     public function getQuantity(): int;
-}
 
+    public function getIcmsTax(): int;
+}
 
 class CalculateContext implements ICalculateContext
 {
@@ -41,5 +44,15 @@ class CalculateContext implements ICalculateContext
     public function getQuantity(): int
     {
         return $this->budget->getQuantity();
+    }
+
+    public function getIcmsTax(): int
+    {
+
+        $origin = $this->budget->getProduct()->stock_uf;
+        $destination = $this->budget->getUser()->uf;
+
+        $icmsTax = new ICMSMock($origin);
+        return $icmsTax->getTaxUf($destination);
     }
 }

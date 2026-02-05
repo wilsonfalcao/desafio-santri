@@ -15,7 +15,7 @@ class ProgressiveDiscountByQuantity implements IStrategy
         $this->discountLevels = (object) [
             'level1' => 0,
             'level2' => 3,
-            'level3' => 5
+            'level3' => 5,
         ];
     }
 

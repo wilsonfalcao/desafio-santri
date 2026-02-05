@@ -17,7 +17,9 @@ class HeavyWeightFreightTaxStrategy implements IStrategy
     // ○​ Produtos > 50kg têm acréscimo de R$ 15,00
     public function apply(float $currentPrice, ICalculateContext $context): float
     {
-        if ($context->getWeightTotal() === 0) throw new OutOfRangeException('Product item must be range of 1-99999999 grams...');
+        if ($context->getWeightTotal() === 0) {
+            throw new OutOfRangeException('Product item must be range of 1-99999999 grams...');
+        }
 
         return match (true) {
             $context->getWeightTotal() > $this->startHeavyWeightGrams => ($currentPrice + $this->taxHeavyWeight),
