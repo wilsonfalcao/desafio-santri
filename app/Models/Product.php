@@ -15,6 +15,6 @@ class Product extends Model
         'price',
         'stock_quantity',
         'weight_grams',
-        'stock_uf'
+        'stock_uf',
     ];
 }

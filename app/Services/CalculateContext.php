@@ -17,6 +17,8 @@ interface ICalculateContext
     public function getQuantity(): int;
 
     public function getIcmsTax(): int;
+
+    public function getClientType(): string;
 }
 
 class CalculateContext implements ICalculateContext
@@ -46,6 +48,11 @@ class CalculateContext implements ICalculateContext
         return $this->budget->getQuantity();
     }
 
+    public function getClientType(): string
+    {
+        return $this->budget->getUser()->client_type;
+    }
+
     public function getIcmsTax(): int
     {
 
@@ -53,6 +60,7 @@ class CalculateContext implements ICalculateContext
         $destination = $this->budget->getUser()->uf;
 
         $icmsTax = new ICMSMock($origin);
+
         return $icmsTax->getTaxUf($destination);
     }
 }

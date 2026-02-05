@@ -8,6 +8,11 @@ use App\Services\IBudget;
 
 class Budget implements IBudget
 {
+    public function getId(): string
+    {
+        return '';
+    }
+
     public function getProduct(): Product
     {
         return Product::find(1);
