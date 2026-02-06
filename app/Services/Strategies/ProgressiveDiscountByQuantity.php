@@ -25,8 +25,8 @@ class ProgressiveDiscountByQuantity implements IStrategy
         return match (true) {
             ($baseValue->getQuantity() <= 9) => ($basePrice * (1 - ($this->discountLevels->level1))),
             ($baseValue->getQuantity() >= 10 && $baseValue->getQuantity() <= 49) => ($basePrice * (1 - ($this->discountLevels->level2 / 100))),
-            ($baseValue->getQuantity() > 50) => ($basePrice * (1 - ($this->discountLevels->level3 / 100))),
-            false => ($basePrice)
+            ($baseValue->getQuantity() >= 50) => ($basePrice * (1 - ($this->discountLevels->level3 / 100))),
+            default => ($basePrice)
         };
     }
 }
