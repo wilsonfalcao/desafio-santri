@@ -24,14 +24,19 @@ interface ICalculateContext
 
 class CalculateContext implements ICalculateContext
 {
+    /**
+     * @param IBudget $budget Budget Instance
+     * @param int $profitDiscount Discount to Apply Product Before All Stratagies
+     * Example: 10 = 10% | 1 = 1% | 25,52% = 2552
+     */
     public function __construct(
         protected IBudget $budget,
-        protected float $profitDiscount = 0
+        protected int $profitDiscount = 0
     ) {}
 
     public function getTotal(): float
     {
-        return $this->budget->getProduct()->price * (1 - $this->profitDiscount);
+        return $this->budget->getProduct()->price * (1 - ($this->profitDiscount / 100));
     }
 
     public function getWeightTotal(): int
