@@ -1,7 +1,8 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Enums\ClientTypeEnum;
-use App\Enums\Constraints;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -21,7 +22,7 @@ return new class extends Migration
                 [
                     'ATACADO',
                     'VAREJO',
-                    'REVENDEDOR'
+                    'REVENDEDOR',
                 ]
             )
                 ->after('is_premium')

@@ -6,15 +6,15 @@ namespace App\Models;
 
 use App\Services\IBudget;
 
-use function Symfony\Component\Clock\now;
-
-class Budget implements IBudget
+class BudgetMock implements IBudget
 {
     protected string $id;
+
     public function __construct()
     {
-        $this->id = hash('md5', date("h:i:sa"));
+        $this->id = 'b65b886f173ec05da2e629fcaff7ddd6';
     }
+
     public function getId(): string
     {
         return $this->id;

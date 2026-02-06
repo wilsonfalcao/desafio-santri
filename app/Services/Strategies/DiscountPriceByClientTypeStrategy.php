@@ -9,7 +9,6 @@ use App\Services\ICalculateContext;
 
 class DiscountPriceByClientTypeStrategy implements IStrategy
 {
-
     protected array $discountClientType;
 
     public function __construct()
@@ -21,20 +20,20 @@ class DiscountPriceByClientTypeStrategy implements IStrategy
         ];
     }
 
-    //- Descontos por tipo de cliente (varejo, atacado, revendedor)
+    // - Descontos por tipo de cliente (varejo, atacado, revendedor)
     public function apply(float $currentPrice, ICalculateContext $context): float
     {
 
         $discountPercentage = match ($context->getClientType()) {
             ClientTypeEnum::WHOLESALE => $this->discountClientType['ATACADO'],
-            ClientTypeEnum::RESALLER  => $this->discountClientType['REVENDEDOR'],
-            default                   => $this->discountClientType['VAREJO'],
+            ClientTypeEnum::RESALLER => $this->discountClientType['REVENDEDOR'],
+            default => $this->discountClientType['VAREJO'],
         };
 
         if ($discountPercentage === 0) {
             return $currentPrice;
         }
 
-        return ($currentPrice * (1 - ($discountPercentage / 100)));
+        return $currentPrice * (1 - ($discountPercentage / 100));
     }
 }

@@ -28,7 +28,7 @@ class User extends Authenticatable
     ];
 
     protected $casts = [
-        'client_type' => ClientTypeEnum::class
+        'client_type' => ClientTypeEnum::class,
     ];
 
     /**

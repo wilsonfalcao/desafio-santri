@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Http\Controllers\CalculateController;
 use App\Http\Controllers\ProductController;
+use App\Http\Middleware\MesureResponseTime;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -13,5 +14,7 @@ Route::get('/', function () {
 // Products Route
 Route::apiResource('products', ProductController::class);
 
-// Calculate Route
-Route::apiResource('calculate', CalculateController::class);
+Route::middleware([MesureResponseTime::class])->group(function () {
+    // Calculate Route
+    Route::apiResource('calculate', CalculateController::class);
+});

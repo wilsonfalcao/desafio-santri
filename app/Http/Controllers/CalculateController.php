@@ -5,43 +5,42 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 // Mock
-use App\Models\Budget;
+use App\Models\BudgetBuild;
+use App\Models\BudgetMock;
 // Calculate Service
 use App\Services\CalculateContext;
-use App\Services\ProductCalculate;
+use App\Services\PricingService;
 // Strategy Calc
-use App\Services\Strategies\DiscountPremiumClientStrategy;
-use App\Services\Strategies\DiscountPriceByClientTypeStrategy;
-use App\Services\Strategies\HeavyWeightFreightTaxStrategy;
-use App\Services\Strategies\IcmsTaxStrategy;
-use App\Services\Strategies\ProgressiveDiscountByQuantity;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class CalculateController extends Controller
 {
-    public function store(Request $request)
+    public function store(PricingService $service, Request $request)
     {
-        $budget = new Budget;
+        $budget = BudgetBuild::fromJson($request->all());
+        // $budget = new BudgetMock();
+
         $baseContext = new CalculateContext($budget);
 
-        $pipeline = new ProductCalculate(
-            Collection::make([
-                new DiscountPriceByClientTypeStrategy(),
-                new DiscountPremiumClientStrategy,
-                new ProgressiveDiscountByQuantity,
-                new HeavyWeightFreightTaxStrategy(1),
-                new IcmsTaxStrategy,
-            ])
-        );
+        if ($cachePrice = Cache::get($budget->getId())) {
+            return $this->createJsonResponse($budget->getId(), $cachePrice);
+        }
 
-        $price = $pipeline->calculate($baseContext);
+        $price = $service->calculatePrice($baseContext);
 
-        $jsonBuild = [
-            'id' => $budget->getId(),
-            'total' => $price
-        ];
+        Cache::put($budget->getId(), $price, now()->addHours(24));
 
-        return response()->json([$jsonBuild], 200);
+        return $this->createJsonResponse($budget->getId(), $price);
+    }
+
+    private function createJsonResponse($id, $price): JsonResponse
+    {
+        return response()->json([
+            'id' => $id,
+            'total' => $price,
+        ], Response::HTTP_OK);
     }
 }
