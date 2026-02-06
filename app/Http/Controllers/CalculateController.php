@@ -4,13 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-// Mock
 use App\Models\BudgetBuild;
 use App\Models\BudgetMock;
-// Calculate Service
 use App\Services\CalculateContext;
 use App\Services\PricingService;
-// Strategy Calc
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -18,14 +15,15 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CalculateController extends Controller
 {
-    public function store(PricingService $service, Request $request)
+    public function store(PricingService $service, Request $request): JsonResponse
     {
         $budget = BudgetBuild::fromJson($request->all());
         // $budget = new BudgetMock();
 
         $baseContext = new CalculateContext($budget);
 
-        if ($cachePrice = Cache::get($budget->getId())) {
+        $cachePrice = Cache::get($budget->getId());
+        if ($cachePrice) {
             return $this->createJsonResponse($budget->getId(), $cachePrice);
         }
 
@@ -36,7 +34,7 @@ class CalculateController extends Controller
         return $this->createJsonResponse($budget->getId(), $price);
     }
 
-    private function createJsonResponse($id, $price): JsonResponse
+    private function createJsonResponse(string $id, float|int|string $price): JsonResponse
     {
         return response()->json([
             'id' => $id,

@@ -21,7 +21,7 @@ class PricingService
                 new DiscountPriceByClientTypeStrategy,
                 new DiscountPremiumClientStrategy,
                 new ProgressiveDiscountByQuantity,
-                new HeavyWeightFreightTaxStrategy(1),
+                new HeavyWeightFreightTaxStrategy(10),
                 new IcmsTaxStrategy,
             ])
         );
