@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Models\BudgetBuild;
-use App\Models\BudgetMock;
+use App\DTO\Budget\BudgetBuild;
 use App\Services\CalculateContext;
 use App\Services\PricingService;
 use Illuminate\Http\Request;
