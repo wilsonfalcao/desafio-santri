@@ -8,16 +8,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreProductRequest;
 // Mock
 use App\Models\Product;
-//
-// Rules Strategy Calculate
-use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    //
-
-    public function index(Request $request) {}
-
     public function store(StoreProductRequest $request)
     {
         $post = Product::create($request->validated());

@@ -24,13 +24,13 @@ class ProductCalculator implements IProductCalculate
         $this->strategiesPipeline = $strategiesPipeline;
     }
 
-    public function calculate(ICalculateContext $baseValue): float
+    public function calculate(ICalculateContext $calculateContex): float
     {
 
-        $priceCalculate = $baseValue->getTotal();
+        $priceCalculate = $calculateContex->getTotal();
 
-        return $this->strategiesPipeline->reduce(function (float $actualPrice, $strategy) use (&$baseValue) {
-            return $strategy->apply($actualPrice, $baseValue);
+        return $this->strategiesPipeline->reduce(function (float $actualPrice, $strategy) use (&$calculateContex) {
+            return $strategy->apply($actualPrice, $calculateContex);
         }, $priceCalculate);
 
         return $priceCalculate;
