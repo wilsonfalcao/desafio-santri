@@ -12,7 +12,7 @@ interface IProductCalculate
     public function calculate(ICalculateContext $baseValue): float;
 }
 
-class ProductCalculate implements IProductCalculate
+class ProductCalculator implements IProductCalculate
 {
     protected Collection $strategiesPipeline;
 

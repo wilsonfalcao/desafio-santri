@@ -16,7 +16,7 @@ class PricingService
     public function calculatePrice(ICalculateContext $context): float
     {
 
-        $pipeline = new ProductCalculate(
+        $pipeline = new ProductCalculator(
             Collection::make([
                 new DiscountPriceByClientTypeStrategy,
                 new DiscountPremiumClientStrategy,
