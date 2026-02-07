@@ -2,8 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Models;
+namespace App\DTO\Budget;
 
+use App\Models\Product;
+use App\Models\User;
 use App\Services\IBudget;
 use InvalidArgumentException;
 

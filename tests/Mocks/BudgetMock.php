@@ -2,9 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Models;
+namespace Tests\Mocks;
 
+use App\Models\Product;
+use App\Models\User;
 use App\Services\IBudget;
+use Illuminate\Support\Str;
 
 class BudgetMock implements IBudget
 {
@@ -12,7 +15,7 @@ class BudgetMock implements IBudget
 
     public function __construct()
     {
-        $this->id = 'b65b886f173ec05da2e629fcaff7ddd6';
+        $this->id = Str::uniqid();
     }
 
     public function getId(): string
