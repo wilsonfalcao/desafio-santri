@@ -6,6 +6,8 @@ namespace App\Services;
 
 use App\Enums\ClientTypeEnum;
 use App\Models\ICMSMock;
+use App\ValueObject\Money;
+use App\ValueObject\Percentage;
 
 interface ICalculateContext
 {
@@ -27,7 +29,7 @@ class CalculateContext implements ICalculateContext
     /**
      * @param IBudget $budget Budget Instance
      * @param int $profitDiscount Discount to Apply Product Before All Stratagies
-     * Example: 10 = 10% | 1 = 1% | 25,52% = 2552
+     * Example: 10000 = 10% | 1000 = 1% | 25,52% = 25520
      */
     public function __construct(
         protected IBudget $budget,
@@ -36,7 +38,17 @@ class CalculateContext implements ICalculateContext
 
     public function getTotal(): float
     {
-        return $this->budget->getProduct()->price * (1 - ($this->profitDiscount / 100));
+
+        $money = Money::fromFloat($this->getPrice());
+        $percent = Percentage::fromInt($this->profitDiscount);
+
+        $priceWithDiscount = $percent->substractFrom($money->getValue())->toFloat();
+        return ($priceWithDiscount * $this->getQuantity());
+    }
+
+    public function getPrice(): float
+    {
+        return (float) $this->budget->getProduct()->price;
     }
 
     public function getWeightTotal(): int

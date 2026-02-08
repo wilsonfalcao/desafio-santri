@@ -4,16 +4,20 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\ValueObject\Percentage;
 use InvalidArgumentException;
 
 class ICMSMock
 {
+    /**
+     * Example: 18000 = 18% 
+     */
     protected array $taxUfMatrix = [
-        'SP' => ['PE' => 18, 'RJ' => 12, 'MG' => 12, 'SP' => 0],
-        'PE' => ['SP' => 12, 'RJ' => 12, 'PE' => 5,  'MG' => 12],
-        'RJ' => ['SP' => 12, 'PE' => 12, 'RJ' => 0,  'MG' => 12],
-        'MG' => ['SP' => 12, 'PE' => 12, 'RJ' => 12, 'MG' => 0],
-        'GO' => ['SP' => 18, 'RJ' => 20, 'PE' => 12, 'GO' => 0],
+        'SP' => ['PE' => 18000, 'RJ' => 12000, 'MG' => 12000, 'SP' => 0],
+        'PE' => ['SP' => 12000, 'RJ' => 12000, 'PE' => 5000,  'MG' => 12000],
+        'RJ' => ['SP' => 12000, 'PE' => 12000, 'RJ' => 0,  'MG' => 12000],
+        'MG' => ['SP' => 12000, 'PE' => 12000, 'RJ' => 12000, 'MG' => 0],
+        'GO' => ['SP' => 18000, 'RJ' => 20000, 'PE' => 12000, 'GO' => 0],
     ];
 
     protected string $keyUfOrigin;
@@ -34,6 +38,8 @@ class ICMSMock
             throw new InvalidArgumentException('UF destination does not exist in the array.');
         }
 
-        return $this->taxUfMatrix[$this->keyUfOrigin][$destination];
+        $percent = Percentage::fromInt($this->taxUfMatrix[$this->keyUfOrigin][$destination]);
+
+        return $percent->getValue();
     }
 }
