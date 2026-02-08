@@ -21,15 +21,15 @@ class BudgetBuild implements IBudget
     public static function fromJson(array $data): self
     {
 
-        if (! isset($data['id'], $data['user_id'], $data['product'][0]['id'])) {
+        if (! isset($data['id'], $data['user_id'], $data['product']['id'])) {
             throw new InvalidArgumentException('Expected a object type Budget from data');
         }
 
         return new self(
             (string) $data['id'],
-            (int) $data['product'][0]['id'],
+            (int) $data['product']['id'],
             (int) $data['user_id'],
-            (int) $data['product'][0]['quantity']
+            (int) $data['product']['quantity']
         );
     }
 

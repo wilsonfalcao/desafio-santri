@@ -16,5 +16,5 @@ Route::apiResource('products', ProductController::class);
 
 Route::middleware([MesureResponseTime::class])->group(function () {
     // Calculate Route
-    Route::apiResource('calculate', CalculateController::class);
+    Route::post('calculate', [CalculateController::class, 'calculate']);
 });
