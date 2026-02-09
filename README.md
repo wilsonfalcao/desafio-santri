@@ -463,5 +463,22 @@ Exemplo:
 }
 ```
 
+## 6. Tabela de testes aplicados
+
+| Classe testada | Nome do teste | Tipo de teste | Tipo de classe |
+|----------------|---------------|---------------|----------------|
+| Calculate Route (API) | CalculateRouteTest | Integração | Endpoint / Camada HTTP |
+| Exemplo de rota | ExampleTest | Integração | Endpoint de exemplo |
+| DiscountPremiumClientStrategy | DiscountPremiumClientStrategyTest | Unitário | Strategy |
+| DiscountPriceByClientTypeStrategy | DiscountPriceByClientTypeStrategyTest | Unitário | Strategy |
+| HeavyWeightFreightTaxStrategy | HeavyWeightFreightTaxStrategyTest | Unitário | Strategy |
+| IcmsTaxStrategy | IcmsTaxStrategyTest | Unitário | Strategy |
+| ProgressiveDiscountByQuantity | ProgressiveDiscountByQuantityStrategyTest | Unitário | Strategy |
+| Budget (Service/Builder) | BudgetBuildTest | Unitário | Classe de domínio / Builder |
+| CalculateContext | CalculateContextTest | Unitário | Contexto |
+| Money (Value Object) | MoneyTest | Unitário | Value Object |
+| Percentage (Value Object) | PercentageTest | Unitário | Value Object |
+
+
 
 
