@@ -24,7 +24,7 @@ final class Percentage
 
         if ($value < 0 && $value <= 100) throw new InvalidArgumentException('Percentage value must be between 0 and 100');
 
-        $percentInt = (int) ($value / self::FACTOR);
+        $percentInt = (int) round($value * self::FACTOR);
 
         return new self($percentInt);
     }

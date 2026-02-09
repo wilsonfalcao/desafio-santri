@@ -23,7 +23,7 @@ final class Money
 
         if (!is_finite($value) || !is_float($value)) throw new InvalidArgumentException('Money value must be float valid');
 
-        $percentInt = (int) ($value * self::FACTOR);
+        $percentInt = (int) round($value * self::FACTOR);
 
         return new self($percentInt);
     }
